@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+
+{% block title %}Error {{ status_code }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-20 text-center bg-gray-800 rounded-xl p-10">
+    <h1 class="text-5xl font-extrabold text-red-400 mb-4">Error {{ status_code }}</h1>
+    <p class="text-lg text-gray-300 mb-6">
+        {{ message }}
+    </p>
+    <a href="{% url 'home' %}"
+       class="inline-block mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-xl shadow transition">
+        Go back to Home
+    </a>
+</div>
+{% endblock %}
