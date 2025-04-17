@@ -4,36 +4,10 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
 <div class="max-w-4xl mx-auto mt-12 text-center">
-    <div class="mb-6 inline-flex items-center text-sm rounded-full p-[2px] bg-gradient-to-r from-purple-400 via-pink-600 to-red-500">
-        <div class="flex items-center px-3 py-1 rounded-full bg-gray-900 text-white">
-            <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-            Machine Learning & AI Engineer
-        </div>
-    </div>
-    
-    <h1 class="text-6xl font-bold mb-6">
-        Building
-        <span class="bg-gradient-to-r from-purple-400 via-pink-600 to-red-500 text-transparent bg-clip-text">
-            Intelligent
-        </span> <br>
-        Systems for the future
-    </h1>
-
-    <p class="text-xl md:text-2xl text-muted-foreground mb-8 text-gray-400">
-        I craft AI solutions that solve real-world problems through innovative machine learning and deep learning techniques.
-      </p>
-
-    <div class="mt-10 gap-6 flex flex-col sm:flex-row justify-center">
-        <a href="{% url 'home' %}" class="inline-block mt-4 text-gray-800 bg-white hover:bg-gray-300 font-medium py-2 px-4 rounded-xl shadow transition">
-            View my projects
-        </a>
-        <a href="{% url 'home' %}" class="inline-block mt-4 bg-gray-500 hover:bg-gray-600 text-gray-900 font-medium py-2 px-4 rounded-xl shadow transition">
-            Get in touch
-        </a>
-    </div>
-
+    {% include 'home/hero.html'%}
     {% include 'home/stats.html' %}
-
 </div>
+
 {% endblock %}
