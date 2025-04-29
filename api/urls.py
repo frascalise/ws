@@ -21,6 +21,7 @@ from .views import home, not_found_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('graph.scalise.dev', home, name='home'),
 
     re_path(r'^.*$', not_found_view, name='not_found'),  # Catch-all for any other URL
 ]
