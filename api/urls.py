@@ -22,6 +22,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('nw/', net_worth, name='net_worth'),
-
-    re_path(r'^.*$', not_found_view, name='not_found'),  # Catch-all for any other URL
 ]
