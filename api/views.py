@@ -10,4 +10,4 @@ def not_found_view(request):
     return render(request, 'error/error.html', {'status_code': 404, 'message': message}, status=404)
 
 def net_worth(request):
-    return redirect('https://docs.google.com/spreadsheets/d/1lnO_5bNFqW7wP4a7W94wnnTM7oEBH4pQaOc1vKpTOes/edit?usp=sharing')
+    return redirect('https://docs.google.com/spreadsheets/d/1lnO_5bNFqW7wP4a7W94wnnTM7oEBH4pQaOc1vKpTOes/edit?usp=sharing', permanent=True)
