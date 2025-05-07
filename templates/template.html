@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="it">
     <head>
@@ -8,10 +9,13 @@
         <!-- Tailwind CSS CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
 
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}">
+
         {% block extra_css %}{% endblock %}
     </head>
 
     <body class="bg-gray-800 text-white">
+        <img src="{% static 'favicon/android-chrome-192x192.png' %}" alt="Logo" class="w-16 h-16 mx-auto mt-4">
         {% include 'components/navbar.html' %}
         
         <main class="p-4 min-h-[calc(100vh-8rem)]">
