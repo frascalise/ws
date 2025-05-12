@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import home, net_worth
+from .views import home, net_worth, oracle
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('nw/', net_worth, name='net_worth'),
+    path('oracle/', oracle, name='oracle'),
 ]
 
 handler404 = 'api.views.not_found_view'

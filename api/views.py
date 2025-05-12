@@ -11,3 +11,6 @@ def not_found_view(request, exception):
 
 def net_worth(request):
     return redirect('https://docs.google.com/spreadsheets/d/1lnO_5bNFqW7wP4a7W94wnnTM7oEBH4pQaOc1vKpTOes/edit?usp=sharing', permanent=True)
+
+def oracle(request):
+    return render(request, 'other/oracle/oracle.html')

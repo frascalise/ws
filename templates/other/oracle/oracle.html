@@ -1,0 +1,138 @@
+{% extends "template.html" %}
+
+{% block title %}Oracle{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center mt-10">
+    <form id="oracle-form" class="w-full max-w-md" autocomplete="off">
+        <label for="oracle-question" class="sr-only">Ask the Oracle</label>
+        <div class="bg-gradient-to-r from-purple-400 via-pink-600 to-red-500 p-[2px] rounded-full">
+            <div class="bg-gray-900 rounded-full flex items-center px-4 py-2">
+                <input
+                    id="oracle-question"
+                    type="text"
+                    placeholder="Ask a question..."
+                    class="flex-1 bg-gray-900 text-white placeholder-gray-400 outline-none border-none rounded-full px-4 py-2 text-lg transition-shadow focus:shadow-outline"
+                    required
+                    maxlength="120"
+                    aria-label="Ask the Oracle"
+                />
+                <button
+                    id="oracle-ask"
+                    type="submit"
+                    class="ml-2 bg-gradient-to-r from-purple-400 via-pink-600 to-red-500 text-white font-semibold px-4 py-2 rounded-full transition hover:opacity-90 disabled:opacity-50"
+                    disabled
+                >
+                    Ask
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="max-w-2xl mx-auto mt-12">
+    <h2 class="text-3xl font-bold mb-6 text-center">Oracle's History</h2>
+    <div id="oracle-history" class="flex flex-col gap-4">
+        <!-- Cronologia append qui -->
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+const responsesPositive = [
+    "Yes", "Definitely", "It is certain", "Yes, in due time", "Yes, but only if you try",
+    "Yes, but only if you ask nicely", "Yes, but only if you believe", "Yes, but only if you put in the effort",
+    "Yes, but only if you stay positive", "Yes, definitely", "Yes, but be careful",
+    "Yes, but only if you try hard enough", "Yes, but only if you believe in yourself",
+    "Of course", "Yes, it's possible", "Yes, it's likely",
+    "I think so", "Yes, it's going to happen", "Yes, it's going to work out",
+    "Mmh yes", "Sure", "Yes, it's going to be easy",
+];
+const responsesNegative = [
+    "No", "Absolutely not", "Don't count on it", "Very doubtful", "No, not likely",
+    "No, not at this time", "No, it's not going to happen", "No, it's not going to work out",
+    "No, it's not going to be easy", "No, it's not going to be worth it", "No way",
+    "Outlook not so good", "No, never", "No, not at all", "No, it's impossible",
+    "I'm sorry, but no", "No, it's not going to happen anytime soon",
+    "No, it's not going to happen in the near future", "No, it's not going to happen in the long run",
+    "Ahaha no", "Lol no", "No, it's not going to happen at all",
+    "You will die alone", "No, it's not going to happen in this lifetime",
+];
+const responsesNeutral = [
+    "Maybe", "Ask again later", "I don't know", "Cannot predict now", 
+    "Ask again later", "Very doubtful", "Outlook unclear", "Ask again in a few days",
+    "Ask again in a week", "Ask again in a month", "Ask again in a year",
+    "Bruh I don't know", "I can't tell you that", "I can't say for sure",
+    "I can't predict the future", "I can't read your mind", "I can't see the future",
+    "I can't see into the future", "I can't see what's going to happen",
+    "Lol I don't know", "I don't have a crystal ball", "I don't have a magic wand",
+    "I don't have a time machine", "I don't have a genie in a bottle",
+    "I don't have a magic eight ball", "I don't have a magic mirror",
+    "What do you think?", "What do you want to happen?",
+    "What do you believe?", "What do you feel?", "What do you want?",
+];
+
+const gradients = {
+    positive: "bg-gradient-to-r from-green-400 via-lime-400 to-emerald-500",
+    negative: "bg-gradient-to-r from-red-500 via-pink-600 to-purple-600",
+    neutral:  "bg-gradient-to-r from-blue-400 via-cyan-500 to-teal-400"
+};
+
+function getRandomResponseAndType() {
+    const types = ["positive", "negative", "neutral"];
+    const rand = Math.floor(Math.random() * 3);
+    const type = types[rand];
+
+    let response;
+    if (type === "positive") {
+        response = responsesPositive[Math.floor(Math.random() * responsesPositive.length)];
+    } else if (type === "negative") {
+        response = responsesNegative[Math.floor(Math.random() * responsesNegative.length)];
+    } else {
+        response = responsesNeutral[Math.floor(Math.random() * responsesNeutral.length)];
+    }
+    return { type, text: response };
+}
+
+$(document).ready(function() {
+    const $input = $('#oracle-question');
+    const $button = $('#oracle-ask');
+    const $history = $('#oracle-history');
+
+    $input.on('input', function() {
+        $button.prop('disabled', $(this).val().trim() === "");
+    });
+
+    $('#oracle-form').on('submit', function(event) {
+        event.preventDefault();
+        const question = $input.val().trim();
+        if (!question) return;
+
+        const {type, text: response} = getRandomResponseAndType();
+        const gradient = gradients[type];
+
+        const $entry = $(`
+            <div class="flex items-center justify-between bg-gray-900 rounded-xl px-4 py-3 shadow transition-all duration-500 opacity-0 translate-y-4">
+                <div class="text-left text-white font-medium text-base max-w-[60%] break-words">${$('<div>').text(question).html()}</div>
+                <div class="ml-4 font-bold text-lg bg-clip-text text-transparent ${gradient}">
+                    ${$('<div>').text(response).html()}
+                </div>
+            </div>
+        `);
+
+        $history.prepend($entry);
+        setTimeout(() => {
+            $entry.removeClass('opacity-0 translate-y-4').addClass('opacity-100 translate-y-0');
+        }, 10);
+
+        $input.val('');
+        $input.attr('placeholder', 'Ask another question...');
+        $button.prop('disabled', true);
+        $input.focus();
+    });
+});
+</script>
+{% endblock %}
